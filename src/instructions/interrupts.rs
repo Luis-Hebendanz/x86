@@ -1,5 +1,6 @@
 //! Enabling and disabling interrupts
-use crate::arch::asm;
+use core::arch::asm;
+
 
 /// Returns whether interrupts are enabled.
 #[inline]

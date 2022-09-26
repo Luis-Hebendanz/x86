@@ -60,12 +60,13 @@ bitflags! {
 
 #[cfg(feature = "instructions")]
 mod x86_64 {
-    use super::*;
+    //use super::*;
     use crate::structures::gdt::SegmentSelector;
     use crate::PrivilegeLevel;
     use bit_field::BitField;
     use core::convert::TryInto;
-    use crate::arch::asm;
+    use core::arch::asm;
+
 
     impl Msr {
         /// Read 64 bits msr register.

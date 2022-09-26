@@ -128,6 +128,7 @@ bitflags! {
 #[cfg(feature = "instructions")]
 mod x86_64 {
     use super::*;
+    use core::arch::asm;
     use crate::{instructions::tlb::Pcid, structures::paging::PhysFrame, PhysAddr, VirtAddr};
 
     impl Cr0 {
