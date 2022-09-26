@@ -65,6 +65,7 @@ mod x86_64 {
     use crate::PrivilegeLevel;
     use bit_field::BitField;
     use core::convert::TryInto;
+    use crate::arch::asm;
 
     impl Msr {
         /// Read 64 bits msr register.

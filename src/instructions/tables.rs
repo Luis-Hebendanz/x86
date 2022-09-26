@@ -1,6 +1,7 @@
 //! Functions to load GDT, IDT, and TSS structures.
 
 use crate::structures::gdt::SegmentSelector;
+use crate::arch::asm;
 
 pub use crate::structures::DescriptorTablePointer;
 

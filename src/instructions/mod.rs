@@ -3,6 +3,7 @@
 //! Special x86_64 instructions.
 
 use crate::VirtAddr;
+use crate::arch::asm;
 
 pub mod interrupts;
 pub mod port;

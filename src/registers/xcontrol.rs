@@ -54,6 +54,8 @@ bitflags! {
 #[cfg(feature = "instructions")]
 mod x86_64 {
     use super::*;
+    use crate::arch::asm;
+    
     impl XCr0 {
         /// Read the current set of XCR0 flags.
         #[inline]

@@ -40,9 +40,6 @@ macro_rules! const_fn {
     };
 }
 
-#[cfg(all(feature = "instructions", feature = "external_asm"))]
-pub(crate) mod asm;
-
 pub mod addr;
 pub mod instructions;
 pub mod registers;
