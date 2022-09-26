@@ -14,15 +14,11 @@ pub mod tlb;
 /// Halts the CPU until the next interrupt arrives.
 #[inline]
 pub fn hlt() {
-    #[cfg(feature = "inline_asm")]
+
     unsafe {
         asm!("hlt", options(nomem, nostack));
     }
 
-    #[cfg(not(feature = "inline_asm"))]
-    unsafe {
-        crate::asm::x86_64_asm_hlt();
-    }
 }
 
 /// Executes the `nop` instructions, which performs no operation (i.e. does nothing).
@@ -33,20 +29,16 @@ pub fn hlt() {
 /// endless loop away.
 #[inline]
 pub fn nop() {
-    #[cfg(feature = "inline_asm")]
+
     unsafe {
         asm!("nop", options(nomem, nostack, preserves_flags));
     }
 
-    #[cfg(not(feature = "inline_asm"))]
-    unsafe {
-        crate::asm::x86_64_asm_nop();
-    }
 }
 
 /// Emits a '[magic breakpoint](https://wiki.osdev.org/Bochs#Magic_Breakpoint)' instruction for the [Bochs](http://bochs.sourceforge.net/) CPU
 /// emulator. Make sure to set `magic_break: enabled=1` in your `.bochsrc` file.
-#[cfg(feature = "inline_asm")]
+
 #[inline]
 pub fn bochs_breakpoint() {
     unsafe {
@@ -56,7 +48,7 @@ pub fn bochs_breakpoint() {
 
 /// Gets the current instruction pointer. Note that this is only approximate as it requires a few
 /// instructions to execute.
-#[cfg(feature = "inline_asm")]
+
 #[inline(always)]
 pub fn read_eip() -> VirtAddr {
     let eip: u32;

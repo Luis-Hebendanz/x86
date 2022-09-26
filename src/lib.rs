@@ -2,11 +2,7 @@
 //! and access to various system registers.
 
 #![cfg_attr(not(test), no_std)]
-#![cfg_attr(feature = "const_fn", feature(const_mut_refs))]
-#![cfg_attr(feature = "const_fn", feature(const_fn_fn_ptr_basics))]
-#![cfg_attr(feature = "inline_asm", feature(asm))]
 #![cfg_attr(feature = "abi_x86_interrupt", feature(abi_x86_interrupt))]
-#![feature(const_fn_trait_bound)]
 #![warn(missing_docs)]
 #![deny(missing_debug_implementations)]
 

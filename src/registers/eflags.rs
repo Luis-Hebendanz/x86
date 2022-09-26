@@ -78,15 +78,11 @@ mod x86_64 {
     #[inline]
     pub fn read_raw() -> u32 {
         let r: u32;
-        #[cfg(feature = "inline_asm")]
+
         unsafe {
             asm!("pushf; pop {}", out(reg) r)
         };
 
-        #[cfg(not(feature = "inline_asm"))]
-        unsafe {
-            r = crate::asm::x86_64_asm_read_rflags();
-        };
 
         r
     }
@@ -119,16 +115,12 @@ mod x86_64 {
     /// flags also used by Rust/LLVM can result in undefined behavior too.
     #[inline]
     pub unsafe fn write_raw(val: u32) {
-        #[cfg(feature = "inline_asm")]
+
         {
             // FIXME - There's probably a better way than saying we preserve the flags even though we actually don't
             asm!("push {}; popf", in(reg) val, options(preserves_flags))
         };
 
-        #[cfg(not(feature = "inline_asm"))]
-        {
-            crate::asm::x86_64_asm_write_rflags(val)
-        }
     }
 
     #[cfg(test)]

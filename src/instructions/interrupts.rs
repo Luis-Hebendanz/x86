@@ -13,14 +13,11 @@ pub fn are_enabled() -> bool {
 /// This is a wrapper around the `sti` instruction.
 #[inline]
 pub fn enable() {
-    #[cfg(feature = "inline_asm")]
+
     unsafe {
         asm!("sti", options(nomem, nostack));
     }
-    #[cfg(not(feature = "inline_asm"))]
-    unsafe {
-        crate::asm::x86_64_asm_interrupt_enable();
-    }
+
 }
 
 /// Disable interrupts.
@@ -28,15 +25,11 @@ pub fn enable() {
 /// This is a wrapper around the `cli` instruction.
 #[inline]
 pub fn disable() {
-    #[cfg(feature = "inline_asm")]
+
     unsafe {
         asm!("cli", options(nomem, nostack));
     }
 
-    #[cfg(not(feature = "inline_asm"))]
-    unsafe {
-        crate::asm::x86_64_asm_interrupt_disable();
-    }
 }
 
 /// Run a closure with disabled interrupts.
@@ -129,28 +122,21 @@ where
 /// information.
 #[inline]
 pub fn enable_and_hlt() {
-    #[cfg(feature = "inline_asm")]
+
     unsafe {
         asm!("sti; hlt", options(nomem, nostack));
     }
-    #[cfg(not(feature = "inline_asm"))]
-    unsafe {
-        crate::asm::x86_64_asm_interrupt_enable_and_hlt();
-    }
+
 }
 
 /// Cause a breakpoint exception by invoking the `int3` instruction.
 #[inline]
 pub fn int3() {
-    #[cfg(feature = "inline_asm")]
+
     unsafe {
         asm!("int3", options(nomem, nostack));
     }
 
-    #[cfg(not(feature = "inline_asm"))]
-    unsafe {
-        crate::asm::x86_64_asm_int3();
-    }
 }
 
 /// Generate a software interrupt by invoking the `int` instruction.
@@ -158,7 +144,7 @@ pub fn int3() {
 /// This currently needs to be a macro because the `int` argument needs to be an
 /// immediate. This macro will be replaced by a generic function when support for
 /// const generics is implemented in Rust.
-#[cfg(feature = "inline_asm")]
+
 #[macro_export]
 macro_rules! software_interrupt {
     ($x:expr) => {{
@@ -166,11 +152,4 @@ macro_rules! software_interrupt {
     }};
 }
 
-/// Not implemented
-#[cfg(not(feature = "inline_asm"))]
-#[macro_export]
-macro_rules! software_interrupt {
-    ($x:expr) => {{
-        compile_error!("software_interrupt not implemented for non-nightly");
-    }};
-}
+

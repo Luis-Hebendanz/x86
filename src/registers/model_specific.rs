@@ -75,15 +75,12 @@ mod x86_64 {
         /// effects.
         #[inline]
         pub unsafe fn read(&self) -> u64 {
-            #[cfg(feature = "inline_asm")]
-            {
-                let (high, low): (u32, u32);
-                asm!("rdmsr", out("eax") low, out("edx") high, in("ecx") self.0, options(nostack));
-                ((high as u64) << 32) | (low as u64)
-            }
+  
+            
+            let (high, low): (u32, u32);
+            asm!("rdmsr", out("eax") low, out("edx") high, in("ecx") self.0, options(nostack));
+            ((high as u64) << 32) | (low as u64)
 
-            #[cfg(not(feature = "inline_asm"))]
-            crate::asm::x86_64_asm_rdmsr(self.0)
         }
 
         /// Write 64 bits to msr register.
@@ -94,15 +91,11 @@ mod x86_64 {
         /// effects.
         #[inline]
         pub unsafe fn write(&mut self, value: u64) {
-            #[cfg(feature = "inline_asm")]
-            {
+
                 let low = value as u32;
                 let high = (value >> 32) as u32;
                 asm!("wrmsr", in("ecx") self.0, in("eax") low, in("edx") high, options(nostack))
-            }
-
-            #[cfg(not(feature = "inline_asm"))]
-            crate::asm::x86_64_asm_wrmsr(self.0, value);
+            
         }
     }
 

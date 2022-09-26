@@ -17,11 +17,8 @@ pub use crate::structures::DescriptorTablePointer;
 /// GDT is safe.
 #[inline]
 pub unsafe fn lgdt(gdt: &DescriptorTablePointer) {
-    #[cfg(feature = "inline_asm")]
-    asm!("lgdt [{}]", in(reg) gdt, options(nostack));
 
-    #[cfg(not(feature = "inline_asm"))]
-    crate::asm::x86_64_asm_lgdt(gdt as *const _);
+    asm!("lgdt [{}]", in(reg) gdt, options(nostack));
 }
 
 /// Load an IDT.
@@ -37,13 +34,8 @@ pub unsafe fn lgdt(gdt: &DescriptorTablePointer) {
 /// IDT is safe.
 #[inline]
 pub unsafe fn lidt(idt: &DescriptorTablePointer) {
-    #[cfg(feature = "inline_asm")]
+
     asm!("lidt [{}]", in(reg) idt, options(nostack));
-
-    //log::info!("lgdt {:#x?}", idt as *const _);
-
-    #[cfg(not(feature = "inline_asm"))]
-    crate::asm::x86_64_asm_lidt(idt as *const _);
 }
 
 /// Load the task state register using the `ltr` instruction.
@@ -55,9 +47,6 @@ pub unsafe fn lidt(idt: &DescriptorTablePointer) {
 /// this TSS is safe.
 #[inline]
 pub unsafe fn load_tss(sel: SegmentSelector) {
-    #[cfg(feature = "inline_asm")]
-    asm!("ltr {0:x}", in(reg) sel.0, options(nostack, nomem));
 
-    #[cfg(not(feature = "inline_asm"))]
-    crate::asm::x86_64_asm_ltr(sel.0)
+    asm!("ltr {0:x}", in(reg) sel.0, options(nostack, nomem));
 }

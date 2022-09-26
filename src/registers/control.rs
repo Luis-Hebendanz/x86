@@ -142,15 +142,11 @@ mod x86_64 {
         pub fn read_raw() -> u32 {
             let value: u32;
 
-            #[cfg(feature = "inline_asm")]
+
             unsafe {
                 asm!("mov {}, cr0", out(reg) value, options(nomem));
             }
 
-            #[cfg(not(feature = "inline_asm"))]
-            unsafe {
-                value = crate::asm::x86_64_asm_read_cr0();
-            }
 
             value
         }
@@ -182,11 +178,9 @@ mod x86_64 {
         /// safety through it, e.g. by disabling paging.
         #[inline]
         pub unsafe fn write_raw(value: u32) {
-            #[cfg(feature = "inline_asm")]
+ 
             asm!("mov cr0, {}", in(reg) value, options(nostack));
 
-            #[cfg(not(feature = "inline_asm"))]
-            crate::asm::x86_64_asm_write_cr0(value);
         }
 
         /// Updates CR0 flags.
@@ -214,15 +208,11 @@ mod x86_64 {
         pub fn read() -> VirtAddr {
             let value: u32;
 
-            #[cfg(feature = "inline_asm")]
+
             unsafe {
                 asm!("mov {}, cr2", out(reg) value, options(nomem));
             }
 
-            #[cfg(not(feature = "inline_asm"))]
-            unsafe {
-                value = crate::asm::x86_64_asm_read_cr2();
-            }
 
             VirtAddr::new(value)
         }
@@ -242,15 +232,12 @@ mod x86_64 {
         pub fn read_raw() -> (PhysFrame, u16) {
             let value: u32;
 
-            #[cfg(feature = "inline_asm")]
+ 
             unsafe {
                 asm!("mov {}, cr3", out(reg) value, options(nomem));
             }
 
-            #[cfg(not(feature = "inline_asm"))]
-            unsafe {
-                value = crate::asm::x86_64_asm_read_cr3();
-            }
+
 
             let addr = PhysAddr::new(value & 0xffff_f000);
             let frame = PhysFrame::containing_address(addr);
@@ -297,11 +284,9 @@ mod x86_64 {
             let addr = frame.start_address();
             let value = addr.as_u32() | val as u32;
 
-            #[cfg(feature = "inline_asm")]
+
             asm!("mov cr3, {}", in(reg) value, options(nostack));
 
-            #[cfg(not(feature = "inline_asm"))]
-            crate::asm::x86_64_asm_write_cr3(value)
         }
     }
 
@@ -317,15 +302,11 @@ mod x86_64 {
         pub fn read_raw() -> u32 {
             let value: u32;
 
-            #[cfg(feature = "inline_asm")]
+
             unsafe {
                 asm!("mov {}, cr4", out(reg) value, options(nostack));
             }
 
-            #[cfg(not(feature = "inline_asm"))]
-            unsafe {
-                value = crate::asm::x86_64_asm_read_cr4();
-            }
 
             value
         }
@@ -359,11 +340,9 @@ mod x86_64 {
         /// flag.
         #[inline]
         pub unsafe fn write_raw(value: u32) {
-            #[cfg(feature = "inline_asm")]
+
             asm!("mov cr4, {}", in(reg) value, options(nostack));
 
-            #[cfg(not(feature = "inline_asm"))]
-            crate::asm::x86_64_asm_write_cr4(value);
         }
 
         /// Updates CR4 flags.
