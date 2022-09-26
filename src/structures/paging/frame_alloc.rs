@@ -1,5 +1,8 @@
 //! Traits for abstracting away frame allocation and deallocation.
 
+#![allow(clippy::missing_safety_doc)]
+
+
 use crate::structures::paging::{PageSize, PhysFrame};
 
 /// A trait for types that can allocate a frame of memory.

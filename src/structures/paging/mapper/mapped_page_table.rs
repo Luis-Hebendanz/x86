@@ -39,7 +39,7 @@ impl<'a, P: PageTableFrameMapping> MappedPageTable<'a, P> {
 
     /// Returns a mutable reference to the wrapped level 2 `PageTable` instance.
     pub fn level_2_table(&mut self) -> &mut PageTable {
-        &mut self.level_2_table
+        self.level_2_table
     }
 
     /// Helper function for implementing Mapper. Safe to limit the scope of unsafe, see

@@ -5,6 +5,7 @@
 #![cfg_attr(feature = "abi_x86_interrupt", feature(abi_x86_interrupt))]
 #![warn(missing_docs)]
 #![deny(missing_debug_implementations)]
+#![allow(clippy::derive_partial_eq_without_eq)]
 
 
 pub use crate::addr::{align_down, align_up, PhysAddr, VirtAddr};

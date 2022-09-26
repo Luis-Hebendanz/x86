@@ -116,16 +116,13 @@ mod x86_64 {
     #[inline]
     pub unsafe fn write_raw(val: u32) {
 
-        {
-            // FIXME - There's probably a better way than saying we preserve the flags even though we actually don't
-            asm!("push {}; popf", in(reg) val, options(preserves_flags))
-        };
+        asm!("push {}; popf", in(reg) val, options(preserves_flags));
 
     }
 
     #[cfg(test)]
     mod test {
-        use crate::registers::rflags::read;
+        use crate::registers::eflags::read;
 
         #[test]
         fn rflags_read() {
