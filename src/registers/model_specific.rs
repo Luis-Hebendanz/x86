@@ -60,7 +60,7 @@ bitflags! {
 
 #[cfg(feature = "instructions")]
 mod x86_64 {
-    //use super::*;
+    use super::*;
     use crate::structures::gdt::SegmentSelector;
     use crate::PrivilegeLevel;
     use bit_field::BitField;
