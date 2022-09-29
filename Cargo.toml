@@ -23,7 +23,7 @@ name = "x86"
 readme = "README.md"
 repository = "https://github.com/rust-osdev/x86_64"
 version = "0.13.1"
-edition = "2018"
+edition = "2021"
 
 [dependencies]
 bit_field = "0.9.0"
@@ -40,6 +40,7 @@ nightly = [ "abi_x86_interrupt" ]
 inline_asm = []
 abi_x86_interrupt = []
 const_fn = []
+binary = []
 
 [package.metadata.release]
 no-dev-version = true
